@@ -32,12 +32,10 @@ export class ProductController {
             throw new NotFoundException(`No product find with id :${id}`);
         }
         else { return entity }
-
     }
 
     @Post()
-    createProduct(@Body() newProduct: CreateProduct): void {
-        this.productService.createProduct(newProduct)
+    createProduct(@Body() newProduct: CreateProduct): Promise<Product | null> {
+        return this.productService.createProduct(newProduct)
     }
-
 }

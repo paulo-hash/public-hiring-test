@@ -24,6 +24,7 @@ export class CarbonEmissionFactorsService {
     });
     return entity
 
+
   }
   save(
     carbonEmissionFactor: CreateCarbonEmissionFactorDto[]

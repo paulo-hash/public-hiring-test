@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from 'typeorm';
 import { CarbonEmissionFactorsService } from "../carbonEmissionFactor/carbonEmissionFactors.service";
@@ -59,15 +59,22 @@ export class CarbonFootPrintService {
    */
     async computationFromProduct(product: CreateProduct) {
 
+        // Check if the product is already in the database
         let entity = await this.productService.findByName(product.name)
+
+        // If not we create it
         if (!entity) {
             entity = await this.productService.createProduct(product)
         }
+
+        // Check if the product as correctly been written
         if (!entity) {
-            throw new Error("Failed to insert the product into the database")
+            throw new InternalServerErrorException("Error while trying to write the product")
         }
 
+        // Compute the carbon foot print based on the ingredients
         let total_emission = await this.Compute_carbon_foot_print(product.ingredients)
+
         let carbonFootPrint = {
             name: product.name,
             product: entity,
@@ -85,11 +92,9 @@ export class CarbonFootPrintService {
     async computationFromProductId(id: number) {
         const product = await this.productService.findById(id)
         if (!product) {
-            throw new Error("Product id not found in product table")
+            throw new NotFoundException("Product id not found in product table")
         }
-        console.log(product)
         let total_emission = await this.Compute_carbon_foot_print(product.ingredients)
-        console.log(total_emission)
         let carbonFootPrint = {
             name: product.name,
             product: product,

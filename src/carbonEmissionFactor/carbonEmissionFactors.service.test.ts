@@ -10,6 +10,7 @@ let carbonEmissionFactorService: CarbonEmissionFactorsService;
 
 beforeAll(async () => {
   await dataSource.initialize();
+  await GreenlyDataSource.cleanDatabase();
   carbonEmissionFactorService = new CarbonEmissionFactorsService(
     dataSource.getRepository(CarbonEmissionFactor)
   );

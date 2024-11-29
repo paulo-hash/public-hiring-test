@@ -31,7 +31,7 @@ export class CarbonFootPrintService {
     async Compute_carbon_foot_print(ingredients: Ingredient[]): Promise<null | number> {
 
         let total_emission: number = 0
-
+        console.log(ingredients)
         for (let ingredient of ingredients) {
 
             let emission = await this.carbonEmissionFactorsService.findByName(ingredient.name)
@@ -61,7 +61,6 @@ export class CarbonFootPrintService {
 
         // Check if the product is already in the database
         let entity = await this.productService.findByName(product.name)
-
         // If not we create it
         if (!entity) {
             entity = await this.productService.createProduct(product)
@@ -71,12 +70,11 @@ export class CarbonFootPrintService {
         if (!entity) {
             throw new InternalServerErrorException("Error while trying to write the product")
         }
-
         // Compute the carbon foot print based on the ingredients
-        let total_emission = await this.Compute_carbon_foot_print(product.ingredients)
+        let total_emission = await this.Compute_carbon_foot_print(entity.ingredients)
 
         let carbonFootPrint = {
-            name: product.name,
+            name: entity.name,
             product: entity,
             emissionCO2: total_emission
         }

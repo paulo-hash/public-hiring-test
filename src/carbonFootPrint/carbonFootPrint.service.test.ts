@@ -34,7 +34,7 @@ beforeEach(async () => {
 
 describe('CarbonFootPrint.service', () => {
 
-  it('should compute  the carbon foot pring by id', async () => {
+  it('should compute the carbon foot print by id', async () => {
     // First we retreive the product id in order to compute it
     let productHamCheesePizza_kg = await dataSource.getRepository(Product).findOne({ where: { name: "hamCheesePizza_kg" } })
     if (productHamCheesePizza_kg) {

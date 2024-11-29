@@ -13,6 +13,7 @@ let burger = getProduct("Burger") // contains an unavailable carbon factor ingre
 
 beforeAll(async () => {
   await dataSource.initialize();
+  await GreenlyDataSource.cleanDatabase();
   service = new ProductService(dataSource.getRepository(Product));
 });
 

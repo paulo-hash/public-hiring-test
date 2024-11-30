@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotFoundException, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
 import { CreateProduct } from '../Products/dto/create-product.dto';
 import { CarbonFootPrint } from './carbonFootPrint.entity';
 import { CarbonFootPrintService } from './carbonFootPrint.service';
@@ -10,6 +10,9 @@ export class CarbonFootPrintController {
     constructor(private readonly carbonFootPrintService: CarbonFootPrintService) { }
     @Get()
     async findAll(): Promise<CarbonFootPrint[]> {
+        Logger.log(
+            `[carbon-foot-print] [GET] findAll: getting all CarbonFootPrint`
+        );
         const entity = await this.carbonFootPrintService.findAll()
         if (!entity) {
             throw new NotFoundException(`No carbon calculation found.`);
@@ -17,7 +20,10 @@ export class CarbonFootPrintController {
         return entity
     }
     @Get(':product_name')
-    async getCarbonEmissionFactor(@Param("product_name") product_name: string): Promise<CarbonFootPrint | null> {
+    async getCarbonFootPrint(@Param("product_name") product_name: string): Promise<CarbonFootPrint | null> {
+        Logger.log(
+            `[carbon-foot-print] [GET] getCarbonFootPrint: getting all CarbonFootPrint by name`
+        )
         const entity = await this.carbonFootPrintService.findByName(product_name);
         if (!entity) {
             throw new NotFoundException(`No carbon foot print found for product ${product_name}`);
@@ -27,11 +33,17 @@ export class CarbonFootPrintController {
 
     @Post('/computation')
     postComputationFromProduct(@Body() newProduct: CreateProduct): Promise<CarbonFootPrint | null> {
+        Logger.log(
+            `[carbon-foot-print] [POST] postComputationFromProduct.`
+        );
         return this.carbonFootPrintService.computationFromProduct(newProduct)
     }
 
     @Post('/computation/:id')
     postComputationFromProductId(@Param("id") id: number): Promise<CarbonFootPrint | null> {
+        Logger.log(
+            `[carbon-foot-print] [POST] postComputationFromProductId.`
+        );
         return this.carbonFootPrintService.computationFromProductId(id)
     }
 

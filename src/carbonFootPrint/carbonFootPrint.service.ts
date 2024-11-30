@@ -31,7 +31,6 @@ export class CarbonFootPrintService {
     async Compute_carbon_foot_print(ingredients: Ingredient[]): Promise<null | number> {
 
         let total_emission: number = 0
-        console.log(ingredients)
         for (let ingredient of ingredients) {
 
             let emission = await this.carbonEmissionFactorsService.findByName(ingredient.name)

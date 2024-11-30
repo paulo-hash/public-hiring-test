@@ -51,13 +51,12 @@ describe('Product.service', () => {
     await expect(service.createProduct(product)).rejects.toThrow(Error);
   });
 
-  it('Shouldnt allow the creation of a product without ingredients', async () => {
+  it('Shouldn t allow the creation of a product without ingredients', async () => {
     // Creation of the product minus ingredients but same name
     let product = {
       name: "hamCheesePizza",
       ingredients: []
     }
-
       ;
     await expect(service.createProduct(product)).rejects.toThrow(Error);
   });

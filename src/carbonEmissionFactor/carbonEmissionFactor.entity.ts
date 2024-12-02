@@ -1,6 +1,7 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("carbon_emission_factors")
+@Index(["name"])
 export class CarbonEmissionFactor extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

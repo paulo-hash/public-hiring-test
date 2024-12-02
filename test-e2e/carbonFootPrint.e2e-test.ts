@@ -42,7 +42,6 @@ describe("CarbonFootPrintController", () => {
   });
 
   it("GET /product", async () => {
-    console.log(defaultProduct)
     return request(app.getHttpServer())
       .get("/product")
       .expect(200)
@@ -63,7 +62,6 @@ describe("CarbonFootPrintController", () => {
         { name: 'oliveOil', quantity: 0.1, unit: 'kg' },
       ],
     }
-    console.log(pizzaProduct)
     return request(app.getHttpServer())
       .post("/carbon-foot-print/computation/")
       .send([pizzaProduct])

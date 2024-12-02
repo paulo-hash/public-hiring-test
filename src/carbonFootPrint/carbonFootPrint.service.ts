@@ -64,6 +64,7 @@ export class CarbonFootPrintService {
    */
     async computationFromProduct(product: CreateProduct): Promise<CarbonFootPrint> {
 
+
         // Check if the product is already in the database
         let entity = await this.productService.findByName(product.name)
         // If not we create it

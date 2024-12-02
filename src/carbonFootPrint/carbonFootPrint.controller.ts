@@ -1,14 +1,17 @@
-import { Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProduct } from '../Products/dto/create-product.dto';
 import { CarbonFootPrint } from './carbonFootPrint.entity';
 import { CarbonFootPrintService } from './carbonFootPrint.service';
 
-
+@ApiTags('Carbon foot print controller')
 @Controller('carbon-foot-print')
 export class CarbonFootPrintController {
 
     constructor(private readonly carbonFootPrintService: CarbonFootPrintService) { }
     @Get()
+    @ApiOperation({ summary: 'Find all the carbon foot print' })
+    @ApiResponse({ status: 200, description: 'Carbon foot prints successfuly found.' })
     async findAll(): Promise<CarbonFootPrint[]> {
         Logger.log(
             `[carbon-foot-print] [GET] findAll: getting all CarbonFootPrint`
@@ -20,31 +23,54 @@ export class CarbonFootPrintController {
         return entity
     }
     @Get(':product_name')
+    @ApiOperation({ summary: 'Find the carbon foot print by product name' })
+    @ApiResponse({ status: 200, description: 'Carbon foot print successfuly found.' })
     async getCarbonFootPrint(@Param("product_name") product_name: string): Promise<CarbonFootPrint | null> {
         Logger.log(
             `[carbon-foot-print] [GET] getCarbonFootPrint: getting all CarbonFootPrint by name`
         )
-        const entity = await this.carbonFootPrintService.findByName(product_name);
-        if (!entity) {
-            throw new NotFoundException(`No carbon foot print found for product ${product_name}`);
+        try {
+            return await this.carbonFootPrintService.findByName(product_name);
         }
-        return entity
+        catch (error) {
+            if (error.message.includes('not found')) {
+                throw new NotFoundException(error.message);
+            }
+            throw error;
+        }
     }
 
     @Post('/computation')
-    postComputationFromProduct(@Body() newProduct: CreateProduct): Promise<CarbonFootPrint | null> {
+    @ApiOperation({ summary: 'Compute the carbon foot print and create new product if necessary' })
+    @ApiResponse({ status: 201, description: 'Carbon foot print successfuly computed.' })
+    async postComputationFromProduct(@Body() newProduct: CreateProduct): Promise<CarbonFootPrint | null> {
         Logger.log(
             `[carbon-foot-print] [POST] postComputationFromProduct.`
         );
-        return this.carbonFootPrintService.computationFromProduct(newProduct)
+        try {
+            return await this.carbonFootPrintService.computationFromProduct(newProduct)
+        }
+        catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 
     @Post('/computation/:id')
-    postComputationFromProductId(@Param("id") id: number): Promise<CarbonFootPrint | null> {
+    @ApiOperation({ summary: 'Compute the carbon foot print of a product by id' })
+    @ApiResponse({ status: 200, description: 'Carbon foot print successfuly computed.' })
+    async postComputationFromProductId(@Param("id") id: number): Promise<CarbonFootPrint | null> {
         Logger.log(
             `[carbon-foot-print] [POST] postComputationFromProductId.`
         );
-        return this.carbonFootPrintService.computationFromProductId(id)
+        try {
+            return await this.carbonFootPrintService.computationFromProductId(id)
+        }
+        catch (error) {
+            if (error.message.includes('not found')) {
+                throw new NotFoundException(error.message);
+            }
+            throw error; // Rejette les autres erreurs sans modification
+        }
     }
-
 }
+

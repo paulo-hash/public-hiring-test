@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from 'typeorm';
 import { CarbonEmissionFactorsService } from "../carbonEmissionFactor/carbonEmissionFactors.service";
@@ -16,12 +16,18 @@ export class CarbonFootPrintService {
         @InjectRepository(CarbonFootPrint) private readonly CarbonFootPrintRepository: Repository<CarbonFootPrint>
     ) { }
 
-    async findAll(): Promise<CarbonFootPrint[]> {
-        return await this.CarbonFootPrintRepository.find({ relations: ['product'] });
+    findAll(): Promise<CarbonFootPrint[]> {
+        return this.CarbonFootPrintRepository.find({ relations: ['product'] });
     }
 
     async findByName(product_name: string): Promise<CarbonFootPrint | null> {
-        return await this.CarbonFootPrintRepository.findOne({ where: { name: product_name }, relations: ['product'] });
+        let result = await this.CarbonFootPrintRepository.findOne({ where: { name: product_name }, relations: ['product'] });
+        if (!result) {
+            Logger.warn(`findByName product : ${product_name} not found.`);
+            throw new Error(`findByName product : ${product_name} not found.`)
+        }
+
+        return result
     }
     /**
      * Compute the carbon foot print for a lsit of ingredients if the ingredient exist
@@ -56,7 +62,7 @@ export class CarbonFootPrintService {
    * @param product a product
    * @returns The repository of the carbon foot print
    */
-    async computationFromProduct(product: CreateProduct) {
+    async computationFromProduct(product: CreateProduct): Promise<CarbonFootPrint> {
 
         // Check if the product is already in the database
         let entity = await this.productService.findByName(product.name)
@@ -67,7 +73,7 @@ export class CarbonFootPrintService {
 
         // Check if the product as correctly been written
         if (!entity) {
-            throw new InternalServerErrorException("Error while trying to write the product")
+            throw new Error("Error while trying to write the product")
         }
         // Compute the carbon foot print based on the ingredients
         let total_emission = await this.Compute_carbon_foot_print(entity.ingredients)
@@ -77,7 +83,7 @@ export class CarbonFootPrintService {
             product: entity,
             emissionCO2: total_emission
         }
-        return await this.CarbonFootPrintRepository.save(carbonFootPrint)
+        return this.CarbonFootPrintRepository.save(carbonFootPrint)
     }
 
     /**
@@ -86,10 +92,10 @@ export class CarbonFootPrintService {
     * @param id id of the product
     * @returns The repository of the carbon foot print
     */
-    async computationFromProductId(id: number) {
+    async computationFromProductId(id: number): Promise<CarbonFootPrint> {
         const product = await this.productService.findById(id)
         if (!product) {
-            throw new NotFoundException("Product id not found in product table")
+            throw new Error("Product id not found in product table")
         }
         let total_emission = await this.Compute_carbon_foot_print(product.ingredients)
         let carbonFootPrint = {
@@ -97,7 +103,7 @@ export class CarbonFootPrintService {
             product: product,
             emissionCO2: total_emission
         }
-        return await this.CarbonFootPrintRepository.save(carbonFootPrint)
+        return this.CarbonFootPrintRepository.save(carbonFootPrint)
 
     }
 

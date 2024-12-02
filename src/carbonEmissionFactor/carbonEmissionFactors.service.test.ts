@@ -38,6 +38,11 @@ describe("CarbonEmissionFactors.service", () => {
     const carbonEmissionFactors = await carbonEmissionFactorService.findAll();
     expect(carbonEmissionFactors).toHaveLength(1);
   });
+  it("should retrieve find by name", async () => {
+    const retrieveOliveOilFactor = await carbonEmissionFactorService.findByName("oliveOil");
+    expect(retrieveOliveOilFactor?.name).toBe("oliveOil");
+  });
+
 });
 
 afterAll(async () => {

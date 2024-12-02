@@ -1,14 +1,17 @@
-import { Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateProduct } from './dto/create-product.dto';
 import { Product } from './product.entity';
 import { ProductService } from './product.service';
 
-
+@ApiTags('Product controller')
 @Controller('product')
 export class ProductController {
 
     constructor(private readonly productService: ProductService) { }
     @Get()
+    @ApiOperation({ summary: 'Find all the products' })
+    @ApiResponse({ status: 200, description: 'List of the product successfuly found.' })
     async findAll(): Promise<Product[]> {
         const entity = await this.productService.findAll()
         Logger.log(
@@ -20,35 +23,47 @@ export class ProductController {
         return entity
     }
     @Get('/name/:product_name')
+    @ApiOperation({ summary: 'Find product by name' })
+    @ApiResponse({ status: 200, description: 'The product successfuly found.' })
     async findProductByName(@Param("product_name") product_name: string) {
         Logger.log(
             `[product] [GET] findProductByName: find a product by name.`
         )
         const entity = await this.productService.findByName(product_name)
         if (!entity) {
+            Logger.warn(`findProductByName product : ${product_name} not found.`);
             throw new NotFoundException(`No product find with name :${product_name}`);
         }
         return entity
     }
 
     @Get('/id/:id')
+    @ApiOperation({ summary: 'Find all the products' })
+    @ApiResponse({ status: 200, description: 'The product successfuly found.' })
     async findProductById(@Param("id") id: number) {
         Logger.log(
             `[product] [GET] findProductById: find a product by id.`
         )
         const entity = await this.productService.findById(id)
         if (!entity) {
+            Logger.warn(`findProductById product id: ${id} not found.`);
             throw new NotFoundException(`No product find with id :${id}`);
         }
         else { return entity }
     }
 
     @Post()
-    createProduct(@Body() newProduct: CreateProduct): Promise<Product | null> {
+    @ApiOperation({ summary: 'Create a product' })
+    @ApiResponse({ status: 201, description: 'The has been created product.' })
+    async createProduct(@Body() newProduct: CreateProduct): Promise<Product | null> {
         Logger.log(
             `[product] [POST] createProduct : create new product.`
         );
-
-        return this.productService.createProduct(newProduct)
+        try {
+            return await this.productService.createProduct(newProduct)
+        }
+        catch (error) {
+            throw new BadRequestException(error.message);
+        }
     }
 }

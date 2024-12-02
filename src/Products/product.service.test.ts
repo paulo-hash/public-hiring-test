@@ -6,14 +6,12 @@ import { ProductService } from "./product.service";
 let service: ProductService
 let hamCheesePizza_kg = getProduct("hamCheesePizza_kg")
 let hamCheesePizza_gr = getProduct("hamCheesePizza_gr") // same as before but with ingredient unit gramme
-let hamCheesePizza_l = getProduct("hamCheesePizza_l")  // contains an ingredient in liter 
-let burger = getProduct("Burger") // contains an unavailable carbon factor ingredient
+
 
 
 
 beforeAll(async () => {
   await dataSource.initialize();
-  await GreenlyDataSource.cleanDatabase();
   service = new ProductService(dataSource.getRepository(Product));
 });
 
@@ -21,6 +19,10 @@ beforeEach(async () => {
   await GreenlyDataSource.cleanDatabase();
   await dataSource.getRepository(Product).save(hamCheesePizza_kg);
 
+});
+
+afterAll(async () => {
+  await dataSource.destroy();
 });
 
 describe('Product.service', () => {
@@ -48,7 +50,7 @@ describe('Product.service', () => {
     }
 
       ;
-    await expect(service.createProduct(product)).rejects.toThrow(Error);
+    await expect(service.createProduct(product)).rejects.toThrow('The product hamCheesePizza_kg already exist but with other ingredients.');
   });
 
   it('Shouldn t allow the creation of a product without ingredients', async () => {
@@ -58,17 +60,14 @@ describe('Product.service', () => {
       ingredients: []
     }
       ;
-    await expect(service.createProduct(product)).rejects.toThrow(Error);
+    await expect(service.createProduct(product)).rejects.toThrow('A product must have ingredients');
   });
 
   it('Shouldnt allow the creation of 2 identic products', async () => {
-    await expect(service.createProduct(hamCheesePizza_kg)).rejects.toThrow(Error);
+    await expect(service.createProduct(hamCheesePizza_kg)).rejects.toThrow('The product already exist.');
   });
 
 
-
 });
 
-afterAll(async () => {
-  await dataSource.destroy();
-});
+

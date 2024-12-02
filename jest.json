@@ -1,6 +1,12 @@
 {
-  "coveragePathIgnorePatterns": ["seed-*"],
-  "moduleFileExtensions": ["js", "json", "ts"],
+  "coveragePathIgnorePatterns": [
+    "seed-*"
+  ],
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
   "rootDir": "./src",
   "testEnvironment": "node",
   "testRegex": ".test.ts",

@@ -25,3 +25,8 @@
 - **Product**: Manages product creation. It ensures that the `product` table contains only one row per product name. When a new product is entered, its ingredients are written into the `ingredients` table using a cascade.  
   - The product must contain at least one ingredient.  
   - The product name must not already exist in the `product` table.
+
+
+  #### 6. New features:
+- **Authentification**: Added a new authentification method to protect enpoints if desired. Still need to create the associated cookie and protect the modules.
+- **Class validator**: Added class validator for the product DTO so that the program accept only valid DTO.

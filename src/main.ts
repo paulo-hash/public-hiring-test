@@ -14,9 +14,9 @@ async function bootstrap() {
   });
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // Supprime les propriétés non définies dans le DTO
-      forbidNonWhitelisted: true, // Lève une exception si des propriétés non définies sont présentes
-      transform: true, // Transforme les données en instances des classes DTO
+      whitelist: true, // Delete undefined propreties in the DTO
+      forbidNonWhitelisted: true, // raise an exception for this undefined properties
+      transform: true, // Transform these data into DTO class instance
     }),
   );
 
@@ -24,7 +24,7 @@ async function bootstrap() {
     .setTitle('API carbon foot print test')
     .setDescription('Greenly test')
     .setVersion('1.0')
-    .addTag('Endpoints') // Tag pour regrouper les endpoints
+    .addTag('Endpoints') // regroup the enpoints
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

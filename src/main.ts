@@ -1,4 +1,4 @@
-import { Logger } from "@nestjs/common";
+import { Logger, ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { dataSource } from "../config/dataSource";
@@ -12,7 +12,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ["error", "warn", "log"],
   });
-
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // Supprime les propriétés non définies dans le DTO
+      forbidNonWhitelisted: true, // Lève une exception si des propriétés non définies sont présentes
+      transform: true, // Transforme les données en instances des classes DTO
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('API carbon foot print test')

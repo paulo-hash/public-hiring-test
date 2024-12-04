@@ -49,9 +49,7 @@ export class ProductService {
      */
     async createProduct(product: CreateProduct): Promise<Product> {
 
-        if (product.ingredients.length === 0) {
-            throw new Error('A product must have ingredients')
-        }
+
         // Check if a product already exist with this name
         let byName = await this.findByName(product.name)
         // Check if a product already exist with this name + ingredients

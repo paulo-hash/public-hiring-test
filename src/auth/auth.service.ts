@@ -7,11 +7,19 @@ export class AuthService {
     fakeUser = [{
         id: 1,
         name: "Paul",
-        password: "123456789"
-    }]
+        password: "123456789",
+        roles: ['admin', 'user']
+    },
+    {
+        id: 2,
+        name: "user",
+        password: "123456789",
+        roles: ['user']
+    }
+    ]
 
     constructor(
-        private jwtSerive: JwtService
+        private jwtService: JwtService
     ) {
 
     }
@@ -24,7 +32,7 @@ export class AuthService {
         else {
             if (findUser.password === password) {
                 const { password, ...user } = findUser
-                return this.jwtSerive.sign(user)
+                return this.jwtService.sign(user)
             }
         }
 

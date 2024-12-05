@@ -1,11 +1,16 @@
-import { BadRequestException, Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Logger, NotFoundException, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Role } from '../auth/Role/role.enum';
+import { Roles } from '../auth/Role/roles.decorator';
 import { CreateProduct } from './dto/create-product.dto';
 import { Product } from './product.entity';
 import { ProductService } from './product.service';
+import { JwtGuard } from '../auth/guards/jwt.guard';
+import { RolesGuard } from '../auth/Role/roles.guard';
 
 @ApiTags('Product controller')
 @Controller('product')
+@UseGuards(JwtGuard, RolesGuard)
 export class ProductController {
 
     constructor(private readonly productService: ProductService) { }
@@ -53,6 +58,7 @@ export class ProductController {
     }
 
     @Post()
+    @Roles(Role.Admin)
     @ApiOperation({ summary: 'Create a product' })
     @ApiResponse({ status: 201, description: 'The has been created product.' })
     async createProduct(@Body() newProduct: CreateProduct): Promise<Product | null> {

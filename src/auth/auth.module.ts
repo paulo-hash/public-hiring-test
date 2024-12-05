@@ -14,7 +14,8 @@ import { LocalStrategy } from './strategies/local.strategy';
       secret: "abc123",
       signOptions: { expiresIn: "1h" }
     }),
-    PassportModule]
+    PassportModule],
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {
 }

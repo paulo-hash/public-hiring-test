@@ -1,11 +1,16 @@
-import { BadRequestException, Body, Controller, Get, Logger, NotFoundException, Param, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Logger, NotFoundException, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from '../auth/guards/jwt.guard';
+import { Role } from '../auth/Role/role.enum';
+import { Roles } from '../auth/Role/roles.decorator';
+import { RolesGuard } from '../auth/Role/roles.guard';
 import { CreateProduct } from '../Products/dto/create-product.dto';
 import { CarbonFootPrint } from './carbonFootPrint.entity';
 import { CarbonFootPrintService } from './carbonFootPrint.service';
 
 @ApiTags('Carbon foot print controller')
 @Controller('carbon-foot-print')
+@UseGuards(JwtGuard, RolesGuard)
 export class CarbonFootPrintController {
 
     constructor(private readonly carbonFootPrintService: CarbonFootPrintService) { }
@@ -41,6 +46,7 @@ export class CarbonFootPrintController {
     }
 
     @Post('/computation')
+    @Roles(Role.Admin)
     @ApiOperation({ summary: 'Compute the carbon foot print and create new product if necessary' })
     @ApiResponse({ status: 201, description: 'Carbon foot print successfuly computed.' })
     async postComputationFromProduct(@Body() newProduct: CreateProduct): Promise<CarbonFootPrint | null> {

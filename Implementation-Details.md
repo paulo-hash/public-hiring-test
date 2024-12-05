@@ -30,3 +30,4 @@
   #### 6. New features:
 - **Authentification**: Added a new authentification method to protect enpoints if desired. Still need to create the associated cookie and protect the modules.
 - **Class validator**: Added class validator for the product DTO so that the program accept only valid DTO.
+- **Roles**: Added role admin to create product.

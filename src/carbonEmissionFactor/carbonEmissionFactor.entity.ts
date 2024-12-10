@@ -8,6 +8,7 @@ export class CarbonEmissionFactor extends BaseEntity {
 
   @Column({
     nullable: false,
+    unique: true
   })
   name: string;
 

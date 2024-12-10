@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Logger, Param, Patch, Post, Put } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Logger, Param, ParseIntPipe, Patch, Post, Put } from "@nestjs/common";
 import { CarbonEmissionFactor } from "./carbonEmissionFactor.entity";
 import { CarbonEmissionFactorsService } from "./carbonEmissionFactors.service";
 import { CreateCarbonEmissionFactorDto } from "./dto/create-carbonEmissionFactor.dto";
@@ -44,12 +44,12 @@ export class CarbonEmissionFactorsController {
   }
 
   @Patch(':id')
-  updateByIdCarbonEmissionFactor(@Param('id') id: number, @Body() carbonEmissionFactors: PatchCarbonEmissionFactorDto) {
+  updateByIdCarbonEmissionFactor(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: number, @Body() carbonEmissionFactors: PatchCarbonEmissionFactorDto) {
     return this.carbonEmissionFactorService.updateById(id, carbonEmissionFactors)
   }
 
   @Delete(':id')
-  deleteByIdCarbonEmissionFactor(@Param('id') id: number) {
+  deleteByIdCarbonEmissionFactor(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: number) {
     try {
       return this.carbonEmissionFactorService.deleteById(id)
     } catch (error) {

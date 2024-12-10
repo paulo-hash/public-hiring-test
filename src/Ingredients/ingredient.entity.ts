@@ -33,7 +33,6 @@ export class Ingredient extends BaseEntity {
   product: Product;
 
 
-
   constructor(props: { name: string; unit: string; quantity: number }) {
     super();
 

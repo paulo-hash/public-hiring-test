@@ -1,12 +1,12 @@
-import { BadRequestException, Body, Controller, Get, Logger, NotFoundException, Param, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, HttpStatus, Logger, NotFoundException, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from '../auth/guards/jwt.guard';
 import { Role } from '../auth/Role/role.enum';
 import { Roles } from '../auth/Role/roles.decorator';
+import { RolesGuard } from '../auth/Role/roles.guard';
 import { CreateProduct } from './dto/create-product.dto';
 import { Product } from './product.entity';
 import { ProductService } from './product.service';
-import { JwtGuard } from '../auth/guards/jwt.guard';
-import { RolesGuard } from '../auth/Role/roles.guard';
 
 @ApiTags('Product controller')
 @Controller('product')
@@ -45,7 +45,7 @@ export class ProductController {
     @Get('/id/:id')
     @ApiOperation({ summary: 'Find all the products' })
     @ApiResponse({ status: 200, description: 'The product successfuly found.' })
-    async findProductById(@Param("id") id: number) {
+    async findProductById(@Param("id", new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE })) id: number) {
         Logger.log(
             `[product] [GET] findProductById: find a product by id.`
         )

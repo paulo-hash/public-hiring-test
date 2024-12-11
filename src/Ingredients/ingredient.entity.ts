@@ -4,10 +4,10 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { Product } from "../Products/product.entity";
+} from 'typeorm';
+import { Product } from '../Products/product.entity';
 
-@Entity("ingredients")
+@Entity('ingredients')
 export class Ingredient extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,7 +23,7 @@ export class Ingredient extends BaseEntity {
   unit: string;
 
   @Column({
-    type: "float",
+    type: 'float',
     nullable: false,
   })
   quantity: number;

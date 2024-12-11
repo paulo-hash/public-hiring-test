@@ -7,7 +7,7 @@ export function convertInKg(value: number, fromUnit: string): number {
   };
 
   if (!weightUnits[fromUnit]) {
-    throw new Error("Unknown unit");
+    throw new Error('Unknown unit');
   }
 
   return value * weightUnits[fromUnit];

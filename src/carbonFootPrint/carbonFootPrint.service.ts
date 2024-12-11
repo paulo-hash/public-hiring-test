@@ -1,12 +1,12 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CarbonEmissionFactorsService } from "../carbonEmissionFactor/carbonEmissionFactors.service";
-import { Ingredient } from "../Ingredients/Interface/ingredient.interface";
-import { CreateProduct } from "../Products/dto/create-product.dto";
-import { ProductService } from "../Products/product.service";
-import { convertInKg } from "../unit_converter/convertInKg";
-import { CarbonFootPrint } from "./carbonFootPrint.entity";
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CarbonEmissionFactorsService } from '../carbonEmissionFactor/carbonEmissionFactors.service';
+import { Ingredient } from '../Ingredients/Interface/ingredient.interface';
+import { CreateProduct } from '../Products/dto/create-product.dto';
+import { ProductService } from '../Products/product.service';
+import { convertInKg } from '../unit_converter/convertInKg';
+import { CarbonFootPrint } from './carbonFootPrint.entity';
 
 @Injectable()
 export class CarbonFootPrintService {
@@ -14,17 +14,17 @@ export class CarbonFootPrintService {
     private readonly carbonEmissionFactorsService: CarbonEmissionFactorsService,
     private readonly productService: ProductService,
     @InjectRepository(CarbonFootPrint)
-    private readonly CarbonFootPrintRepository: Repository<CarbonFootPrint>,
+    private readonly CarbonFootPrintRepository: Repository<CarbonFootPrint>
   ) {}
 
   findAll(): Promise<CarbonFootPrint[]> {
-    return this.CarbonFootPrintRepository.find({ relations: ["product"] });
+    return this.CarbonFootPrintRepository.find({ relations: ['product'] });
   }
 
   async findByName(product_name: string): Promise<CarbonFootPrint | null> {
     const result = await this.CarbonFootPrintRepository.findOne({
       where: { name: product_name },
-      relations: ["product"],
+      relations: ['product'],
     });
     if (!result) {
       Logger.warn(`findByName product : ${product_name} not found.`);
@@ -39,22 +39,22 @@ export class CarbonFootPrintService {
    * @returns the carbon foot print or null if the ingredient dosent exist
    */
   async Compute_carbon_foot_print(
-    ingredients: Ingredient[],
+    ingredients: Ingredient[]
   ): Promise<null | number> {
     let total_emission: number = 0;
     for (const ingredient of ingredients) {
       const emission = await this.carbonEmissionFactorsService.findByName(
-        ingredient.name,
+        ingredient.name
       );
       if (emission) {
         const quantity: number = convertInKg(
           ingredient.quantity,
-          ingredient.unit,
+          ingredient.unit
         );
         total_emission += emission.emissionCO2eInKgPerUnit * quantity;
       } else {
         Logger.warn(
-          `Ingredient ${ingredient.name} carbon factor dosent exist, the carbon foot print is set to null`,
+          `Ingredient ${ingredient.name} carbon factor dosent exist, the carbon foot print is set to null`
         );
         return null;
       }
@@ -70,7 +70,7 @@ export class CarbonFootPrintService {
    * @returns The repository of the carbon foot print
    */
   async computationFromProduct(
-    product: CreateProduct,
+    product: CreateProduct
   ): Promise<CarbonFootPrint> {
     // Check if the product is already in the database
     let entity = await this.productService.findByName(product.name);
@@ -81,11 +81,11 @@ export class CarbonFootPrintService {
 
     // Check if the product as correctly been written
     if (!entity) {
-      throw new Error("Error while trying to write the product");
+      throw new Error('Error while trying to write the product');
     }
     // Compute the carbon foot print based on the ingredients
     const total_emission = await this.Compute_carbon_foot_print(
-      entity.ingredients,
+      entity.ingredients
     );
 
     const carbonFootPrint = {
@@ -105,10 +105,10 @@ export class CarbonFootPrintService {
   async computationFromProductId(id: number): Promise<CarbonFootPrint> {
     const product = await this.productService.findById(id);
     if (!product) {
-      throw new Error("Product id not found in product table");
+      throw new Error('Product id not found in product table');
     }
     const total_emission = await this.Compute_carbon_foot_print(
-      product.ingredients,
+      product.ingredients
     );
     const carbonFootPrint = {
       name: product.name,

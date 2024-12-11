@@ -4,11 +4,10 @@ import {
   Entity,
   Index,
   PrimaryGeneratedColumn,
-  VersionColumn,
-} from "typeorm";
+} from 'typeorm';
 
-@Entity("carbon_emission_factors")
-@Index(["name"])
+@Entity('carbon_emission_factors')
+@Index(['name'])
 export class CarbonEmissionFactor extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,7 +24,7 @@ export class CarbonEmissionFactor extends BaseEntity {
   unit: string;
 
   @Column({
-    type: "float",
+    type: 'float',
     nullable: false,
   })
   emissionCO2eInKgPerUnit: number;
@@ -35,12 +34,9 @@ export class CarbonEmissionFactor extends BaseEntity {
   })
   source: string;
 
-  @VersionColumn()
-  version: number;
-
   sanitize() {
-    if (this.source === "") {
-      throw new Error("Source cannot be empty");
+    if (this.source === '') {
+      throw new Error('Source cannot be empty');
     }
   }
 

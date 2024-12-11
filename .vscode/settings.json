@@ -1,10 +1,16 @@
 {
-    "editor.formatOnSave": true,
-    "typescript.preferences.importModuleSpecifier": "relative",
-    "editor.codeActionsOnSave": [
-      "source.fixAll",
-      "source.organizeImports",
-      "source.addMissingImports"
-    ],
-  }
-  
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": [
+    "source.fixAll",
+    "source.organizeImports",
+    "source.addMissingImports"
+  ]
+}

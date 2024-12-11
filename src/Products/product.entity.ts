@@ -5,12 +5,12 @@ import {
   Index,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { Ingredient } from "../Ingredients/ingredient.entity";
-import { CarbonFootPrint } from "../carbonFootPrint/carbonFootPrint.entity";
+} from 'typeorm';
+import { Ingredient } from '../Ingredients/ingredient.entity';
+import { CarbonFootPrint } from '../carbonFootPrint/carbonFootPrint.entity';
 
-@Entity("product")
-@Index(["name"], { unique: true })
+@Entity('product')
+@Index(['name'], { unique: true })
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,7 +25,7 @@ export class Product extends BaseEntity {
 
   @OneToMany(
     () => CarbonFootPrint,
-    (carbonFootPrint) => carbonFootPrint.product,
+    (carbonFootPrint) => carbonFootPrint.product
   )
   emissionCO2: CarbonFootPrint[];
 

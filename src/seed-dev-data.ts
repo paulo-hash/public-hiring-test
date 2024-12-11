@@ -1,54 +1,54 @@
-import { dataSource } from "../config/dataSource";
-import { CarbonEmissionFactor } from "./carbonEmissionFactor/carbonEmissionFactor.entity";
+import { dataSource } from '../config/dataSource';
+import { CarbonEmissionFactor } from './carbonEmissionFactor/carbonEmissionFactor.entity';
 
 export const TEST_CARBON_EMISSION_FACTORS = [
   {
-    name: "ham",
-    unit: "kg",
+    name: 'ham',
+    unit: 'kg',
     emissionCO2eInKgPerUnit: 0.11,
-    source: "Agrybalise",
+    source: 'Agrybalise',
   },
   {
-    name: "cheese",
-    unit: "kg",
+    name: 'cheese',
+    unit: 'kg',
     emissionCO2eInKgPerUnit: 0.12,
-    source: "Agrybalise",
+    source: 'Agrybalise',
   },
   {
-    name: "tomato",
-    unit: "kg",
+    name: 'tomato',
+    unit: 'kg',
     emissionCO2eInKgPerUnit: 0.13,
-    source: "Agrybalise",
+    source: 'Agrybalise',
   },
   {
-    name: "flour",
-    unit: "kg",
+    name: 'flour',
+    unit: 'kg',
     emissionCO2eInKgPerUnit: 0.14,
-    source: "Agrybalise",
+    source: 'Agrybalise',
   },
   {
-    name: "blueCheese",
-    unit: "kg",
+    name: 'blueCheese',
+    unit: 'kg',
     emissionCO2eInKgPerUnit: 0.34,
-    source: "Agrybalise",
+    source: 'Agrybalise',
   },
   {
-    name: "vinegar",
-    unit: "kg",
+    name: 'vinegar',
+    unit: 'kg',
     emissionCO2eInKgPerUnit: 0.14,
-    source: "Agrybalise",
+    source: 'Agrybalise',
   },
   {
-    name: "beef",
-    unit: "kg",
+    name: 'beef',
+    unit: 'kg',
     emissionCO2eInKgPerUnit: 14,
-    source: "Agrybalise",
+    source: 'Agrybalise',
   },
   {
-    name: "oliveOil",
-    unit: "kg",
+    name: 'oliveOil',
+    unit: 'kg',
     emissionCO2eInKgPerUnit: 0.15,
-    source: "Agrybalise",
+    source: 'Agrybalise',
   },
 ].map((args) => {
   return new CarbonEmissionFactor({
@@ -61,54 +61,54 @@ export const TEST_CARBON_EMISSION_FACTORS = [
 
 export const PRODUCTS = [
   {
-    name: "hamCheesePizza_kg",
+    name: 'hamCheesePizza_kg',
     ingredients: [
-      { name: "ham", quantity: 0.1, unit: "kg" },
-      { name: "cheese", quantity: 0.15, unit: "kg" },
-      { name: "tomato", quantity: 0.4, unit: "kg" },
-      { name: "flour", quantity: 0.7, unit: "kg" },
-      { name: "oliveOil", quantity: 0.3, unit: "kg" },
+      { name: 'ham', quantity: 0.1, unit: 'kg' },
+      { name: 'cheese', quantity: 0.15, unit: 'kg' },
+      { name: 'tomato', quantity: 0.4, unit: 'kg' },
+      { name: 'flour', quantity: 0.7, unit: 'kg' },
+      { name: 'oliveOil', quantity: 0.3, unit: 'kg' },
     ],
   },
   {
-    name: "hamCheesePizza_kg",
+    name: 'hamCheesePizza_kg',
     ingredients: [
-      { name: "ham", quantity: 0.1, unit: "kg" },
-      { name: "cheese", quantity: 0.15, unit: "kg" },
-      { name: "tomato", quantity: 0.4, unit: "kg" },
-      { name: "flour", quantity: 0.7, unit: "kg" },
-      { name: "oliveOil", quantity: 0.3, unit: "kg" },
+      { name: 'ham', quantity: 0.1, unit: 'kg' },
+      { name: 'cheese', quantity: 0.15, unit: 'kg' },
+      { name: 'tomato', quantity: 0.4, unit: 'kg' },
+      { name: 'flour', quantity: 0.7, unit: 'kg' },
+      { name: 'oliveOil', quantity: 0.3, unit: 'kg' },
     ],
   },
 
   {
-    name: "Burger",
+    name: 'Burger',
     ingredients: [
-      { name: "beef", quantity: 0.1, unit: "kg" },
-      { name: "blueCheese", quantity: 0.15, unit: "kg" },
-      { name: "flour", quantity: 0.4, unit: "kg" },
-      { name: "vinegar", quantity: 0.7, unit: "kg" },
-      { name: "MissingIngredient", quantity: 0.3, unit: "kg" },
+      { name: 'beef', quantity: 0.1, unit: 'kg' },
+      { name: 'blueCheese', quantity: 0.15, unit: 'kg' },
+      { name: 'flour', quantity: 0.4, unit: 'kg' },
+      { name: 'vinegar', quantity: 0.7, unit: 'kg' },
+      { name: 'MissingIngredient', quantity: 0.3, unit: 'kg' },
     ],
   },
   {
-    name: "hamCheesePizza_gr",
+    name: 'hamCheesePizza_gr',
     ingredients: [
-      { name: "ham", quantity: 0.1, unit: "gr" },
-      { name: "cheese", quantity: 0.15, unit: "gr" },
-      { name: "tomato", quantity: 0.4, unit: "gr" },
-      { name: "flour", quantity: 0.7, unit: "gr" },
-      { name: "oliveOil", quantity: 0.3, unit: "gr" },
+      { name: 'ham', quantity: 0.1, unit: 'gr' },
+      { name: 'cheese', quantity: 0.15, unit: 'gr' },
+      { name: 'tomato', quantity: 0.4, unit: 'gr' },
+      { name: 'flour', quantity: 0.7, unit: 'gr' },
+      { name: 'oliveOil', quantity: 0.3, unit: 'gr' },
     ],
   },
   {
-    name: "hamCheesePizza_l",
+    name: 'hamCheesePizza_l',
     ingredients: [
-      { name: "ham", quantity: 0.1, unit: "gr" },
-      { name: "cheese", quantity: 0.15, unit: "gr" },
-      { name: "tomato", quantity: 0.4, unit: "l" },
-      { name: "flour", quantity: 0.7, unit: "gr" },
-      { name: "oliveOil", quantity: 0.3, unit: "gr" },
+      { name: 'ham', quantity: 0.1, unit: 'gr' },
+      { name: 'cheese', quantity: 0.15, unit: 'gr' },
+      { name: 'tomato', quantity: 0.4, unit: 'l' },
+      { name: 'flour', quantity: 0.7, unit: 'gr' },
+      { name: 'oliveOil', quantity: 0.3, unit: 'gr' },
     ],
   },
 ].map((args) => {
@@ -119,7 +119,7 @@ export const getProduct = (name: string) => {
   const product = PRODUCTS.find((pr) => pr.name === name);
   if (!product) {
     throw new Error(
-      `test emission factor with name ${name} could not be found`,
+      `test emission factor with name ${name} could not be found`
     );
   }
   return product;
@@ -127,11 +127,11 @@ export const getProduct = (name: string) => {
 
 export const getTestEmissionFactor = (name: string) => {
   const emissionFactor = TEST_CARBON_EMISSION_FACTORS.find(
-    (ef) => ef.name === name,
+    (ef) => ef.name === name
   );
   if (!emissionFactor) {
     throw new Error(
-      `test emission factor with name ${name} could not be found`,
+      `test emission factor with name ${name} could not be found`
     );
   }
   return emissionFactor;

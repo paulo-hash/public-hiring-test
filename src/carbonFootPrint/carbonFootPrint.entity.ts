@@ -4,10 +4,10 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { Product } from "../Products/product.entity";
+} from 'typeorm';
+import { Product } from '../Products/product.entity';
 
-@Entity({ name: "carbon_foot_print" })
+@Entity({ name: 'carbon_foot_print' })
 export class CarbonFootPrint extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,12 +19,12 @@ export class CarbonFootPrint extends BaseEntity {
 
   @Column({
     nullable: true,
-    default: "Agrybalise",
+    default: 'Agrybalise',
   })
   source: string;
 
   @Column({
-    type: "float",
+    type: 'float',
     nullable: true,
   })
   emissionCO2: number | null;

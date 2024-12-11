@@ -4,17 +4,16 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor() {
-        super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            ignoreExpiration: false,
-            secretOrKey: 'abc123',
-        })
-    }
-    validate(payload: any) {
-        console.log('inside JWT strategy')
-        console.log(payload)
-        return payload
-    }
-
+  constructor() {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: "abc123",
+    });
+  }
+  validate(payload: any) {
+    console.log("inside JWT strategy");
+    console.log(payload);
+    return payload;
+  }
 }

@@ -3,10 +3,9 @@ import {
   Column,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Product } from "../Products/product.entity";
-
 
 @Entity("ingredients")
 export class Ingredient extends BaseEntity {
@@ -31,7 +30,6 @@ export class Ingredient extends BaseEntity {
 
   @ManyToOne(() => Product, (product) => product.ingredients)
   product: Product;
-
 
   constructor(props: { name: string; unit: string; quantity: number }) {
     super();

@@ -3,7 +3,7 @@ import {
   Column,
   Entity,
   ManyToOne,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
 } from "typeorm";
 import { Product } from "../Products/product.entity";
 
@@ -14,28 +14,29 @@ export class CarbonFootPrint extends BaseEntity {
 
   @Column({
     nullable: false,
-
   })
   name: string;
 
-  @Column(
-    {
-      nullable: true,
-      default: "Agrybalise"
-    })
+  @Column({
+    nullable: true,
+    default: "Agrybalise",
+  })
   source: string;
 
-  @Column(
-    {
-      type: "float",
-      nullable: true
-    })
+  @Column({
+    type: "float",
+    nullable: true,
+  })
   emissionCO2: number | null;
 
   @ManyToOne(() => Product, (product) => product.emissionCO2)
-  product: Product
+  product: Product;
 
-  constructor(props: { name: string, product: Product, emissionCO2: number | null }) {
+  constructor(props: {
+    name: string;
+    product: Product;
+    emissionCO2: number | null;
+  }) {
     super();
     this.product = props?.product;
     this.name = props?.name;

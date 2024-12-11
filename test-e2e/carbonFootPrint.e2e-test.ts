@@ -38,7 +38,7 @@ describe("CarbonFootPrintController", () => {
 
     defaultProduct = await dataSource
       .getRepository(Product)
-      .find({ relations: ['ingredients'] });
+      .find({ relations: ["ingredients"] });
   });
 
   it("GET /product", async () => {
@@ -52,16 +52,16 @@ describe("CarbonFootPrintController", () => {
 
   it("POST /carbon-foot-print/computation", async () => {
     const pizzaProduct = {
-      name: 'Pizza',
+      name: "Pizza",
 
       ingredients: [
-        { name: 'ham', quantity: 0.2, unit: 'kg' },
-        { name: 'cheese', quantity: 0.1, unit: 'kg' },
-        { name: 'tomato', quantity: 0.1, unit: 'kg' },
-        { name: 'flour', quantity: 0.6, unit: 'kg' },
-        { name: 'oliveOil', quantity: 0.1, unit: 'kg' },
+        { name: "ham", quantity: 0.2, unit: "kg" },
+        { name: "cheese", quantity: 0.1, unit: "kg" },
+        { name: "tomato", quantity: 0.1, unit: "kg" },
+        { name: "flour", quantity: 0.6, unit: "kg" },
+        { name: "oliveOil", quantity: 0.1, unit: "kg" },
       ],
-    }
+    };
     return request(app.getHttpServer())
       .post("/carbon-foot-print/computation/")
       .send([pizzaProduct])
@@ -72,7 +72,6 @@ describe("CarbonFootPrintController", () => {
   });
 
   it("GET /carbon-foot-print/:product_name", async () => {
-
     return request(app.getHttpServer())
       .get(`/carbon-foot-print/hamCheesePizza_kg`)
       .expect(200)
@@ -80,6 +79,4 @@ describe("CarbonFootPrintController", () => {
         expect(body.emissionCO2).toEqual(0.22399999999999998);
       });
   });
-
-
 });

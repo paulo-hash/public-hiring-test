@@ -68,7 +68,7 @@ export const PRODUCTS = [
       { name: "tomato", quantity: 0.4, unit: "kg" },
       { name: "flour", quantity: 0.7, unit: "kg" },
       { name: "oliveOil", quantity: 0.3, unit: "kg" },
-    ]
+    ],
   },
   {
     name: "hamCheesePizza_kg",
@@ -78,7 +78,7 @@ export const PRODUCTS = [
       { name: "tomato", quantity: 0.4, unit: "kg" },
       { name: "flour", quantity: 0.7, unit: "kg" },
       { name: "oliveOil", quantity: 0.3, unit: "kg" },
-    ]
+    ],
   },
 
   {
@@ -89,7 +89,7 @@ export const PRODUCTS = [
       { name: "flour", quantity: 0.4, unit: "kg" },
       { name: "vinegar", quantity: 0.7, unit: "kg" },
       { name: "MissingIngredient", quantity: 0.3, unit: "kg" },
-    ]
+    ],
   },
   {
     name: "hamCheesePizza_gr",
@@ -99,7 +99,7 @@ export const PRODUCTS = [
       { name: "tomato", quantity: 0.4, unit: "gr" },
       { name: "flour", quantity: 0.7, unit: "gr" },
       { name: "oliveOil", quantity: 0.3, unit: "gr" },
-    ]
+    ],
   },
   {
     name: "hamCheesePizza_l",
@@ -109,20 +109,17 @@ export const PRODUCTS = [
       { name: "tomato", quantity: 0.4, unit: "l" },
       { name: "flour", quantity: 0.7, unit: "gr" },
       { name: "oliveOil", quantity: 0.3, unit: "gr" },
-    ]
+    ],
   },
-
 ].map((args) => {
   return { name: args.name, ingredients: args.ingredients };
 });
 
 export const getProduct = (name: string) => {
-  const product = PRODUCTS.find(
-    (pr) => pr.name === name
-  );
+  const product = PRODUCTS.find((pr) => pr.name === name);
   if (!product) {
     throw new Error(
-      `test emission factor with name ${name} could not be found`
+      `test emission factor with name ${name} could not be found`,
     );
   }
   return product;
@@ -130,11 +127,11 @@ export const getProduct = (name: string) => {
 
 export const getTestEmissionFactor = (name: string) => {
   const emissionFactor = TEST_CARBON_EMISSION_FACTORS.find(
-    (ef) => ef.name === name
+    (ef) => ef.name === name,
   );
   if (!emissionFactor) {
     throw new Error(
-      `test emission factor with name ${name} could not be found`
+      `test emission factor with name ${name} could not be found`,
     );
   }
   return emissionFactor;

@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeorm } from "../config/dataSource";
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from "./auth/auth.module";
 import { CarbonEmissionFactorsModule } from "./carbonEmissionFactor/carbonEmissionFactors.module";
 import { CarbonFootPrintModule } from "./carbonFootPrint/carbonFootPrint.module";
 import { IngredientModule } from "./Ingredients/ingredient.module";
@@ -23,7 +23,7 @@ import { ProductModule } from "./Products/product.module";
     CarbonFootPrintModule,
     IngredientModule,
     ProductModule,
-    AuthModule
-  ]
+    AuthModule,
+  ],
 })
-export class AppModule { }
+export class AppModule {}

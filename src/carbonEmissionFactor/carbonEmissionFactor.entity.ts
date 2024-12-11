@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, Index, PrimaryGeneratedColumn, VersionColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  Index,
+  PrimaryGeneratedColumn,
+  VersionColumn,
+} from "typeorm";
 
 @Entity("carbon_emission_factors")
 @Index(["name"])
@@ -8,7 +15,7 @@ export class CarbonEmissionFactor extends BaseEntity {
 
   @Column({
     nullable: false,
-    unique: true
+    unique: true,
   })
   name: string;
 
@@ -28,7 +35,6 @@ export class CarbonEmissionFactor extends BaseEntity {
   })
   source: string;
 
-  // Colonne pour le versionnement
   @VersionColumn()
   version: number;
 

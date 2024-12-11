@@ -21,14 +21,14 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('API carbon foot print test')
-    .setDescription('Greenly test')
-    .setVersion('1.0')
-    .addTag('Endpoints') // regroup the enpoints
+    .setTitle("API carbon foot print test")
+    .setDescription("Greenly test")
+    .setVersion("1.0")
+    .addTag("Endpoints") // regroup the enpoints
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup("api", app, document);
 
   await app.listen(3000);
 }

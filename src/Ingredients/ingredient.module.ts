@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { IngredientController } from './ingredient.controller';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { IngredientController } from "./ingredient.controller";
 import { Ingredient } from "./ingredient.entity";
-import { IngredientService } from './ingredient.service';
+import { IngredientService } from "./ingredient.service";
 
 @Module({
-    controllers: [IngredientController],
-    providers: [IngredientService],
-    imports: [TypeOrmModule.forFeature([Ingredient])],
+  controllers: [IngredientController],
+  providers: [IngredientService],
+  imports: [TypeOrmModule.forFeature([Ingredient])],
 })
-export class IngredientModule { }
+export class IngredientModule {}

@@ -3,16 +3,16 @@ import { getTestEmissionFactor } from "../seed-dev-data";
 import { CarbonEmissionFactor } from "./carbonEmissionFactor.entity";
 import { CarbonEmissionFactorsService } from "./carbonEmissionFactors.service";
 
-let flourEmissionFactor = getTestEmissionFactor("flour");
-let hamEmissionFactor = getTestEmissionFactor("ham");
-let olivedOilEmissionFactor = getTestEmissionFactor("oliveOil");
+const flourEmissionFactor = getTestEmissionFactor("flour");
+const hamEmissionFactor = getTestEmissionFactor("ham");
+const olivedOilEmissionFactor = getTestEmissionFactor("oliveOil");
 let carbonEmissionFactorService: CarbonEmissionFactorsService;
 
 beforeAll(async () => {
   await dataSource.initialize();
   await GreenlyDataSource.cleanDatabase();
   carbonEmissionFactorService = new CarbonEmissionFactorsService(
-    dataSource.getRepository(CarbonEmissionFactor)
+    dataSource.getRepository(CarbonEmissionFactor),
   );
 });
 
@@ -39,10 +39,10 @@ describe("CarbonEmissionFactors.service", () => {
     expect(carbonEmissionFactors).toHaveLength(1);
   });
   it("should retrieve find by name", async () => {
-    const retrieveOliveOilFactor = await carbonEmissionFactorService.findByName("oliveOil");
+    const retrieveOliveOilFactor =
+      await carbonEmissionFactorService.findByName("oliveOil");
     expect(retrieveOliveOilFactor?.name).toBe("oliveOil");
   });
-
 });
 
 afterAll(async () => {
